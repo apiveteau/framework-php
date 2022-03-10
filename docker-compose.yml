@@ -1,0 +1,45 @@
+version: '3'
+services:
+#  front:
+#    build: ./front
+#    restart: unless-stopped
+#    env_file:
+#      - .env
+#    ports:
+#      - "8081:8080"
+#    networks:
+#      - api-network
+#    volumes:
+#      - "./front:/app"
+  back:
+    build:
+      context: ./back/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./back/.env
+    ports:
+      - "8082:8080"
+    volumes:
+      - "./back:/var/www"
+    networks:
+      - api-network
+      - data-network
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: db
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+    ports:
+      - "3306:3306"
+    networks:
+      - data-network
+    volumes:
+      - db-data:/var/lib/mysql
+networks:
+  api-network:
+  data-network:
+volumes:
+  db-data:
