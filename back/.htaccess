@@ -1,0 +1,4 @@
+Options +FollowSymlinks
+AddType application/x-httpd-php .html
+RewriteEngine On
+RewriteRule ^((?!Public).*)$ index.php [QSA,L]

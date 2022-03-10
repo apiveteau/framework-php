@@ -1,0 +1,9 @@
+/Cache/*
+/Log/*
+/Modules/*
+/Tests/*
+/.*
+/Public/temp
+phpunit
+README.MD
+.env

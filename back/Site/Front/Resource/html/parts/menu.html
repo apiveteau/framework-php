@@ -1,0 +1,15 @@
+<aside id="menu" class="bg-dark col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+    <a href="#menu" title="Open menu" class="toggle-open close" data-effect="blur"><i class="fi fi-close-a"></i> Close Menu</a>
+    <ul>
+        [foreach:MainMenu:menu as element]
+            <li>
+                <a href="{element.slug}">{element.title}</a>
+                <ul>
+                    [foreach:MainMenuSub:element.child as sub]
+                        <li><a href="{sub.slug}">{sub.title}</a></li>
+                    [foreach:MainMenuSub]
+                </ul>
+            </li>
+        [foreach:MainMenu]
+    </ul>
+</aside>

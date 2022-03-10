@@ -1,0 +1,22 @@
+{
+    "web-stud.io": {
+        "/": "Front\\Controller\\DefaultController->index",
+        "/icons": "Front\\Controller\\DefaultController->icons",
+        "/404": "Front\\Controller\\DefaultController->notFound"
+    },
+    "development.web-stud.io": {
+        "/": "Front\\Controller\\DefaultController->index",
+        "/icons": "Front\\Controller\\DefaultController->icons",
+        "/404": "Front\\Controller\\DefaultController->notFound"
+    },
+    "localhost:8082": {
+        "/": "Front\\Controller\\DefaultController->index",
+        "/icons": "Front\\Controller\\DefaultController->icons",
+        "/404": "Front\\Controller\\DefaultController->notFound"
+    },
+    "development.web-stud.io.ddev.site": {
+        "/": "Front\\Controller\\DefaultController->index",
+        "/icons": "Front\\Controller\\DefaultController->icons",
+        "/404": "Front\\Controller\\DefaultController->notFound"
+    }
+}

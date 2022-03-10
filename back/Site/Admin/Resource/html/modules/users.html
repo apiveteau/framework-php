@@ -1,0 +1,17 @@
+{section:Site/Admin/Resource/html/parts/header}
+{section:Site/Admin/Resource/html/parts/modal}
+<section class="row">
+    <header class="bg-gradient-primary col-12">
+
+    </header>
+    {section:Site/Admin/Resource/html/parts/menu}
+    <main class="bg-light col-11 col-sm-10">
+        <div id="users-module" class="row">
+            <header class="bg-dark col-12">
+                <p class="action text-right"><a href="#user-modal-create" class="toggle-open"><i class="fi fi-plus-a" data-tags="interfaces"></i> Add user</a></p>
+            </header>
+            <div class="ajax col-12" data-target="/admin/api/user/get" data-render="table" data-edition="true" data-show="username,email,fullname,createdat,level"></div>
+        </div>
+    </main>
+</section>
+{section:Site/Admin/Resource/html/parts/footer}

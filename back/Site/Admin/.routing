@@ -1,0 +1,29 @@
+{
+    "localhost:8082": {
+         "/admin": "Admin\\Controller\\AdminController->adminLogin",
+         "/admin/verify": "Admin\\Controller\\AdminController->adminVerify",
+         "/admin/dashboard": "Admin\\Controller\\AdminController->dashboard",
+         "/admin/dashboard/logout": "Admin\\Controller\\AdminController->logout",
+         "/admin/dashboard/users": "Admin\\Controller\\AdminController->moduleUsers",
+         "/admin/dashboard/pages": "Admin\\Controller\\AdminController->modulePages",
+         "/admin/dashboard/icons": "Admin\\Controller\\AdminController->moduleIcons"
+     },
+    "development.web-stud.io": {
+        "/admin": "Admin\\Controller\\AdminController->adminLogin",
+        "/admin/verify": "Admin\\Controller\\AdminController->adminVerify",
+        "/admin/dashboard": "Admin\\Controller\\AdminController->dashboard",
+        "/admin/dashboard/logout": "Admin\\Controller\\AdminController->logout",
+        "/admin/dashboard/users": "Admin\\Controller\\AdminController->moduleUsers",
+        "/admin/dashboard/pages": "Admin\\Controller\\AdminController->modulePages",
+        "/admin/dashboard/icons": "Admin\\Controller\\AdminController->moduleIcons"
+    },
+    "development.web-stud.io.ddev.site": {
+        "/admin": "Admin\\Controller\\AdminController->adminLogin",
+        "/admin/verify": "Admin\\Controller\\AdminController->adminVerify",
+        "/admin/dashboard": "Admin\\Controller\\AdminController->dashboard",
+        "/admin/dashboard/logout": "Admin\\Controller\\AdminController->logout",
+        "/admin/dashboard/users": "Admin\\Controller\\AdminController->moduleUsers",
+        "/admin/dashboard/pages": "Admin\\Controller\\AdminController->modulePages",
+        "/admin/dashboard/icons": "Admin\\Controller\\AdminController->moduleIcons"
+    }
+}

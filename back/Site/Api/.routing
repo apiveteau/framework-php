@@ -1,0 +1,38 @@
+{
+    "web-stud.io": {
+         "/admin/api/page/create": "Api\\Controller\\PageController->create",
+         "/admin/api/page/update": "Api\\Controller\\PageController->update",
+         "/admin/api/page/get": "Api\\Controller\\PageController->get",
+         "/admin/api/page/get/{id}": "Api\\Controller\\PageController->get",
+         "/admin/api/page/delete/{id}": "Api\\Controller\\PageController->delete",
+         "/admin/api/user/create": "Api\\Controller\\UserController->create",
+         "/admin/api/user/update": "Api\\Controller\\UserController->update",
+         "/admin/api/user/get": "Api\\Controller\\UserController->get",
+         "/admin/api/user/get/{id}": "Api\\Controller\\UserController->get",
+         "/admin/api/user/delete/{id}": "Api\\Controller\\UserController->delete"
+     },
+    "localhost:8082": {
+        "/admin/api/page/create": "Api\\Controller\\PageController->create",
+        "/admin/api/page/update": "Api\\Controller\\PageController->update",
+        "/admin/api/page/get": "Api\\Controller\\PageController->get",
+        "/admin/api/page/get/{id}": "Api\\Controller\\PageController->get",
+        "/admin/api/page/delete/{id}": "Api\\Controller\\PageController->delete",
+        "/admin/api/user/create": "Api\\Controller\\UserController->create",
+        "/admin/api/user/update": "Api\\Controller\\UserController->update",
+        "/admin/api/user/get": "Api\\Controller\\UserController->get",
+        "/admin/api/user/get/{id}": "Api\\Controller\\UserController->get",
+        "/admin/api/user/delete/{id}": "Api\\Controller\\UserController->delete"
+    },
+    "development.web-stud.io.ddev.site": {
+        "/admin/api/page/create": "Api\\Controller\\PageController->create",
+        "/admin/api/page/update": "Api\\Controller\\PageController->update",
+        "/admin/api/page/get": "Api\\Controller\\PageController->get",
+        "/admin/api/page/get/{id}": "Api\\Controller\\PageController->get",
+        "/admin/api/page/delete/{id}": "Api\\Controller\\PageController->delete",
+        "/admin/api/user/create": "Api\\Controller\\UserController->create",
+        "/admin/api/user/update": "Api\\Controller\\UserController->update",
+        "/admin/api/user/get": "Api\\Controller\\UserController->get",
+        "/admin/api/user/get/{id}": "Api\\Controller\\UserController->get",
+        "/admin/api/user/delete/{id}": "Api\\Controller\\UserController->delete"
+    }
+}

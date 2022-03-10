@@ -1,0 +1,92 @@
+<div>
+    <div id="page-modal-create" class="modal bg-dark">
+        <h2>Create a new page</h2>
+        <a href="#page-modal-create" class="close toggle-open"><i class="fi fi-close-a"></i> Close</a>
+        <form action="/admin/api/page/create" method="POST" class="ajax">
+            <div><label for="title"><i class="fi fi-bookmark" data-tags="interfaces"></i> Title</label><input type="text" name="title" id="title" data-field="title"></div>
+            <div><label for="description"><i class="fi fi-commenting" data-tags="interfaces"></i> Description</label><textarea id="description" data-field="description"></textarea></div>
+            <div><label for="slug"><i class="fi fi-world-o" data-tags="interfaces"></i> Slug</label><input type="text" id="slug" data-field="slug" readonly></div>
+            <div><label for="content"><i class="fi fi-code" data-tags="interfaces"></i> Content</label><textarea id="content" class="wysiwyg" data-field="content"></textarea></div>
+            <div><label for="parent"><i class="fi fi-sitemap" data-tags="interfaces"></i> Parent</label><select name="parent" id="parent" data-field="parent">
+                <option value="0"></option>
+                [foreach:PageModalCreation:pages as itemPageParent]
+                <option value="{itemPageParent.id}">{itemPageParent.title}</option>
+                [foreach:PageModalCreation]
+            </select></div>
+            <input type="hidden" class="desillusion">
+            <input type="hidden" data-field="auth" value="{user.id}" id="auth" name="auth">
+            <p class="text-right">
+                <button class="btn btn-primary"><i class="fi fi-check" data-tags="interfaces"></i> Create</button>
+            </p>
+        </form>
+    </div>
+    <div id="page-modal-edit" class="modal bg-dark">
+        <a href="#page-modal-edit" class="close toggle-open"><i class="fi fi-close-a"></i> Close</a>
+        <form action="/admin/api/page/update" method="POST" class="ajax">
+            <p class="text-right flex-opposite">
+                <span class="h3">Edition</span><button class="btn btn-primary form-prefill" data-src="/admin/api/page/get/" data-href="#page-modal-edit"><i class="fi fi-check" data-tags="interfaces"></i> Update</button>
+            </p>
+            <input type="hidden" class="desillusion">
+            <input type="hidden" data-field="id" id="idPageUpdate" name="id">
+            <input type="hidden" data-field="auth" id="authPageUpdate" name="auth">
+            <h3>Preview</h3>
+            <div>
+                <div><label for="contentPageUpdate"><i class="fi fi-code" data-tags="interfaces"></i> Content</label><textarea id="contentPageUpdate" class="wysiwyg" data-field="content"></textarea></div>
+            </div>
+            <h3>Metadata</h3>
+            <div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <div><label for="titlePageUpdate"><i class="fi fi-bookmark" data-tags="interfaces"></i> Title</label><input type="text" name="title" id="titlePageUpdate" data-field="title"></div>
+                        <div><label for="slugPageUpdate"><i class="fi fi-world-o" data-tags="interfaces"></i> Slug</label><input type="text" id="slugPageUpdate" data-field="slug" readonly></div>
+                        <div><label for="parentPageUpdate"><i class="fi fi-sitemap" data-tags="interfaces"></i> Parent</label><select name="parent" id="parentPageUpdate" data-field="parent">
+                            <option value="0"></option>
+                            [foreach:PageParent:pages as PageParentEdition]
+                            <option value="{PageParentEdition.id}">{PageParentEdition.title}</option>
+                            [foreach:PageParent]
+                        </select></div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                        <div><label for="keywordsPageUpdate"><i class="fi fi-hashtag" data-tags="interfaces"></i> Keywords</label><input type="text" id="keywordsPageUpdate" data-field="keywords"></div>
+                        <div><label for="imagePageUpdate"><i class="fi fi-picture" data-tags="interfaces"></i> Image</label><input type="text" name="image" id="imagePageUpdate" data-field="image"></div>
+                        <div><label for="descriptionPageUpdate"><i class="fi fi-commenting" data-tags="interfaces"></i> Description</label><textarea id="descriptionPageUpdate" data-field="description"></textarea></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="user-modal-create" class="modal bg-dark">
+        <h2>Create a new user</h2>
+        <a href="#user-modal-create" class="close toggle-open"><i class="fi fi-close-a"></i> Close</a>
+        <form action="/admin/api/user/create" method="POST" class="ajax">
+            <div><label for="username"><i class="fi fi-person" data-tags="interfaces"></i> Username</label><input type="text" name="username" id="username" data-field="username"></div>
+            <div><label for="password"><i class="fi fi-key" data-tags="interfaces"></i> Password</label><input type="password" id="password" data-field="password"></div>
+            <div><label for="fullname"><i class="fi fi-minus-a" data-tags="interfaces"></i> Fullname</label><input type="text" id="fullname" data-field="fullname"></div>
+            <div><label for="email"><i class="fi fi-minus-a" data-tags="interfaces"></i> E-mail</label><input type="text" id="email" data-field="email"></div>
+            <div><label for="description2"><i class="fi fi-commenting" data-tags="interfaces"></i> Description</label><textarea
+                    name="description2" id="description2" data-field="description"></textarea></div>
+            <input type="hidden" class="desillusion">
+            <p class="text-right">
+                <button class="btn btn-primary"><i class="fi fi-check" data-tags="interfaces"></i> Create</button>
+            </p>
+        </form>
+    </div>
+    <div id="user-modal-edit" class="modal bg-dark">
+        <a href="#user-modal-edit" class="close toggle-open"><i class="fi fi-close-a"></i> Close</a>
+        <form action="/admin/api/user/update" method="POST" class="ajax">
+            <p class="text-right flex-opposite">
+                <span>Edition</span>
+                <button class="btn btn-primary"><i class="fi fi-check" data-tags="interfaces"></i> Update</button>
+            </p>
+            <input type="hidden" data-field="id" id="idUserEdition" name="id">
+            <div><label for="usernameUserEdition"><i class="fi fi-person" data-tags="interfaces"></i> Username</label><input type="text" name="username" id="usernameUserEdition" data-field="username"></div>
+            <div><label for="passwordUserEdition"><i class="fi fi-key" data-tags="interfaces"></i> Password</label><input type="password" id="passwordUserEdition" data-field="password"></div>
+            <div><label for="emailUserEdition"><i class="fi fi-minus-a" data-tags="interfaces"></i> E-mail</label><input type="text" id="emailUserEdition" data-field="email"></div>
+            <div><label for="fullnameUserEdition"><i class="fi fi-minus-a" data-tags="interfaces"></i> Fullname</label><input type="text" id="fullnameUserEdition" data-field="fullname"></div>
+            <div><label for="imageUserEdition"><i class="fi fi-minus-a" data-tags="interfaces"></i> image</label><input type="text" id="imageUserEdition" data-field="image"></div>
+            <div><label for="descriptionUserEdition"><i class="fi fi-commenting" data-tags="interfaces"></i> Description</label><textarea
+                    name="description2" id="descriptionUserEdition" data-field="description"></textarea></div>
+            <input type="hidden" class="desillusion">
+        </form>
+    </div>
+</div>
