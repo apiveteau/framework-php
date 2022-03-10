@@ -1,2 +1,5 @@
 .idea
 .DS_Store
+back/Cache
+back/Log
+back/Public/temp
