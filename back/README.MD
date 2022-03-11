@@ -116,6 +116,8 @@ Our team is composed by 2 developper : François Gazaube as PHP developper and A
 
     Available Annotation :
         @event domain/class.event
+        @method PUT/GET/POST/DELETE
+        @site site.tld
         @route /path
         @type varchar/integer/text...
         @size int
