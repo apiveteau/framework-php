@@ -57,7 +57,7 @@ class Routing implements Base
             }
         }
         Event::exec("core/routing.read", $this->routes);
-        Logger::log("core/routing.read", json_encode($this->routes));
+        Logger::log("core/routing.read", json_encode($this->routes), Logger::$DEBUG_LEVEL);
         return $this;
     }
 
@@ -66,8 +66,9 @@ class Routing implements Base
      */
     private function checkEmptySite() {
         foreach (explode(",", Environment::getConfiguration("SITES_DOMAINS")) as $site) {
-            if (!isset($this->routes[$site]) || empty($this->routes[$site]))
+            if ((!isset($this->routes[$site]) || empty($this->routes[$site])) && !isset($this->routes["static"])) {
                 Logger::log("routing", "Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
+            }
         }
     }
 

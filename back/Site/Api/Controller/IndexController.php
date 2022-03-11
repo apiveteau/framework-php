@@ -8,13 +8,21 @@ class IndexController extends Controller {
     /**
      * @route /
      * @method GET
-     * @return array
      */
     public function index() {
+        $this->render("Site/Api/Templates/index", []);
+    }
+    /**
+     * @route /test
+     * @method GET
+     * @return array
+     */
+    public function get()
+    {
         return ["status" => 200, "data" => 'GET : Hello World'];
     }
     /**
-     * @route /
+     * @route /test
      * @method PUT
      * @return array
      */
@@ -22,7 +30,7 @@ class IndexController extends Controller {
         return ["status" => 200, "data" => 'PUT : Hello World'];
     }
     /**
-     * @route /
+     * @route /test
      * @method DELETE
      * @return array
      */
@@ -30,7 +38,7 @@ class IndexController extends Controller {
         return ["status" => 200, "data" => 'DELETE : Hello World'];
     }
     /**
-     * @route /
+     * @route /test
      * @method POST
      * @return array
      */
