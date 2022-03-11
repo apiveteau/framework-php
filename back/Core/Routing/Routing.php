@@ -148,27 +148,25 @@ class Routing implements Base
      * @return bool
      */
     private function checkRouteParams($site, $uri, $method) {
-        foreach ($this->routes[$site] as $testing_method => $routes) {
-            if ($method === $testing_method) {
-                foreach ($routes as $route => $controller) {
-                    $existingRouteArray = array_values(array_filter(explode("/", $route)));
-                    $testingRouteArray = array_values(array_filter(explode("/", $uri)));
-                    $index = 0;
-                    $tempParameter = [];
-                    if (count($testingRouteArray) === count($existingRouteArray)) {
-                        while ($index < count($testingRouteArray)) {
-                            if (($testingRouteArray[$index] === $existingRouteArray[$index]) || ($testingRouteArray[$index] !== $existingRouteArray[$index] && $this->isURIParameter($existingRouteArray[$index]))) {
-                                if ($this->isURIParameter($existingRouteArray[$index]))
-                                    $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
-                                $index++;
-                                if ($index === count($testingRouteArray)) {
-                                    $this->define($uri, $controller, $site, $tempParameter);
-                                    return true;
-                                }
+        $data = $this->routes[$site] ?? $this->routes["static"];
+        foreach ($data as $route => $methods) {
+            foreach ($methods as $route_method => $controller) {
+                $existingRouteArray = array_values(array_filter(explode("/", $route)));
+                $testingRouteArray = array_values(array_filter(explode("/", $uri)));
+                $index = 0;
+                $tempParameter = [];
+                if (count($testingRouteArray) === count($existingRouteArray)) {
+                    while ($index < count($testingRouteArray)) {
+                        if (($testingRouteArray[$index] === $existingRouteArray[$index]) || ($testingRouteArray[$index] !== $existingRouteArray[$index] && $this->isURIParameter($existingRouteArray[$index]))) {
+                            if ($this->isURIParameter($existingRouteArray[$index]))
+                                $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
+                            $index++;
+                            if ($index === count($testingRouteArray) && $route_method === $method) {
+                                $this->define($uri, $controller, $site, $tempParameter);
+                                return true;
                             }
-                            else
-                                $index = count($testingRouteArray);
-                        }
+                        } else
+                            $index = count($testingRouteArray);
                     }
                 }
             }
