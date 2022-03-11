@@ -16,7 +16,7 @@ class Routing implements Base
      * Containing all route as interpretable array
      * @var array $routes
      */
-    private $routes = ["static" => []];
+    private $routes = ["static" => ["GET" => [], "PUT" => [], "POST" => [], "DELETE" => []]];
     /**
      * Status code of return
      * @var int $status
@@ -45,17 +45,19 @@ class Routing implements Base
                 if (isset($configuration) && array_key_exists("route", $configuration)) {
                     if (isset($configuration["site"])) {
                         foreach ($configuration["route"] as $route) {
-                            $this->routes[trim($configuration["site"][0])][trim($route)] = $classname . "->" . $method;
+                            $this->routes[$configuration["site"]][$route] = ["GET" => [], "PUT" => [], "POST" => [], "DELETE" => []];
+                            $this->routes[trim($configuration["site"][0])][$configuration["method"] ?? 'GET'][trim($route)] = $classname . "->" . $method;
                         }
                     } else {
                         foreach ($configuration["route"] as $route) {
-                            $this->routes["static"][trim($route)] = $classname . "->" . $method;
+                            $this->routes["static"][trim($route)][$configuration["method"][0] ?? 'GET'] = $classname . "->" . $method;
                         }
                     }
                 }
             }
         }
         Event::exec("core/routing.read", $this->routes);
+        Logger::log("core/routing.read", json_encode($this->routes), Logger::$DEBUG_LEVEL);
         return $this;
     }
 
@@ -64,8 +66,9 @@ class Routing implements Base
      */
     private function checkEmptySite() {
         foreach (explode(",", Environment::getConfiguration("SITES_DOMAINS")) as $site) {
-            if (!isset($this->routes[$site]) || empty($this->routes[$site]))
+            if ((!isset($this->routes[$site]) || empty($this->routes[$site])) && !isset($this->routes["static"])) {
                 Logger::log("routing", "Site '" . $site . "' has no route", Logger::$WARNING_LEVEL);
+            }
         }
     }
 
@@ -76,8 +79,10 @@ class Routing implements Base
     private function read($path) {
         $routes = json_decode(Files::read($path));
         foreach ($routes as $site => $configuration) {
-            foreach ($configuration as $route => $controller) {
-                $this->routes[$site][$route] = $controller;
+            foreach($configuration as $method => $routes) {
+                foreach ($routes as $route => $controller) {
+                    $this->routes[$site][$route][$method] = $controller;
+                }
             }
         }
     }
@@ -89,17 +94,19 @@ class Routing implements Base
     private function setCurrent() {
         $site = $_SERVER["HTTP_HOST"];
         $uri = $_SERVER["REQUEST_URI"];
+        $method = $_SERVER["REQUEST_METHOD"];
         $status = 200;
-        if (!isset($this->routes[$site])) {
+        if (!isset($this->routes[$site]) && !isset($this->routes['static'])) {
             $status = 500;
         } else {
-            if (isset($this->routes[$site][$uri]))
+            if (isset($this->routes[$site][$uri]) && isset($this->routes[$site][$uri][$method])) {
                 $this->define($uri, $this->routes[$site][$uri], $site);
-            elseif (isset($this->routes["static"][$uri]))
-                $this->define($uri, $this->routes["static"][$uri], $site);
-            else {
-                if (!$this->checkRouteParams($site, $uri) && !$this->checkRouteParams("static", $uri))
+            } elseif (isset($this->routes["static"][$uri]) && $this->routes["static"][$uri][$method]) {
+                $this->define($uri, $this->routes["static"][$uri][$method], $site);
+            } else {
+                if (!$this->checkRouteParams($site, $uri, $method) && !$this->checkRouteParams("static", $uri, $method)) {
                     $status = 404;
+                }
             }
         }
         Logger::log("routing", "" . $_SERVER["REQUEST_URI"] . ":" . $status, Logger::$DEFAULT_LEVEL);
@@ -140,25 +147,27 @@ class Routing implements Base
      * @param $uri
      * @return bool
      */
-    private function checkRouteParams($site, $uri) {
-        foreach ($this->routes[$site] as $route => $controller) {
-            $existingRouteArray = array_values(array_filter(explode("/", $route)));
-            $testingRouteArray = array_values(array_filter(explode("/", $uri)));
-            $index = 0;
-            $tempParameter = [];
-            if (count($testingRouteArray) === count($existingRouteArray)) {
-                while ($index < count($testingRouteArray)) {
-                    if (($testingRouteArray[$index] === $existingRouteArray[$index]) || ($testingRouteArray[$index] !== $existingRouteArray[$index] && $this->isURIParameter($existingRouteArray[$index]))) {
-                        if ($this->isURIParameter($existingRouteArray[$index]))
-                            $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
-                        $index++;
-                        if ($index === count($testingRouteArray)) {
-                            $this->define($uri, $controller, $site, $tempParameter);
-                            return true;
-                        }
+    private function checkRouteParams($site, $uri, $method) {
+        $data = $this->routes[$site] ?? $this->routes["static"];
+        foreach ($data as $route => $methods) {
+            foreach ($methods as $route_method => $controller) {
+                $existingRouteArray = array_values(array_filter(explode("/", $route)));
+                $testingRouteArray = array_values(array_filter(explode("/", $uri)));
+                $index = 0;
+                $tempParameter = [];
+                if (count($testingRouteArray) === count($existingRouteArray)) {
+                    while ($index < count($testingRouteArray)) {
+                        if (($testingRouteArray[$index] === $existingRouteArray[$index]) || ($testingRouteArray[$index] !== $existingRouteArray[$index] && $this->isURIParameter($existingRouteArray[$index]))) {
+                            if ($this->isURIParameter($existingRouteArray[$index]))
+                                $tempParameter[substr($existingRouteArray[$index], 1, strlen($existingRouteArray[$index]) - 2)] = $testingRouteArray[$index];
+                            $index++;
+                            if ($index === count($testingRouteArray) && $route_method === $method) {
+                                $this->define($uri, $controller, $site, $tempParameter);
+                                return true;
+                            }
+                        } else
+                            $index = count($testingRouteArray);
                     }
-                    else
-                        $index = count($testingRouteArray);
                 }
             }
         }

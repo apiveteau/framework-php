@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Testing API pages</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<ul>
+    <li><button class="btn-test" data-method="GET" data-route="/test">GET</button></li>
+    <li><button class="btn-test" data-method="POST" data-route="/test">POST</button></li>
+    <li><button class="btn-test" data-method="PUT" data-route="/test">PUT</button></li>
+    <li><button class="btn-test" data-method="DELETE" data-route="/test">DELETE</button></li>
+</ul>
+<script>
+    $('.btn-test').on('click', (e) => {
+        let method = $(e.target).data('method');
+        let route = $(e.target).data('route');
+        $.ajax(route, {type: method});
+    })
+</script>
+</body>
+</html>
