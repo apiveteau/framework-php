@@ -24,6 +24,7 @@ define("PATH_CACHE", PATH_ROOT . "Cache" . DIRECTORY_SEPARATOR);
 include_once __DIR__ . "/Core/Loader/Loader.php";
 
 use Core\Environment;
+use Core\Files;
 use Core\Kernel;
 use Core\Loader;
 
@@ -36,6 +37,9 @@ Loader::explore(PATH_MODULE, "Interface", "Tests");
 Loader::explore(PATH_MODULE, "", "Tests");
 Loader::explore(PATH_SITE, "Interface");
 Loader::explore(PATH_SITE, "", "Interface");
+
+Files::put("Log/loader/classes.log", json_encode(Loader::$CLASSES), true);
+
 
 /**
  * Base environment vars

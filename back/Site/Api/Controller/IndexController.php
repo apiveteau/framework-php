@@ -10,7 +10,7 @@ class IndexController extends Controller {
      * @method GET
      */
     public function index() {
-        $this->render("Site/Api/Templates/index", []);
+        $this->render("Site/Api/Templates/index", ["array" => ["Element 1", "Element 2", "Element 3"]]);
     }
     /**
      * @route /test
